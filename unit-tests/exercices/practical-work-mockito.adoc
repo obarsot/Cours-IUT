@@ -1,0 +1,35 @@
+== Les mocks
+
+* Pré-requis :
+** Eclipse (ou IDE équivalent) installé
+** JDK 8+ installé
+** Maven 3.6.3+installé (facultatif)
+
+=== Import Projet
+
+. Démarrer Eclipse
+. Importer le projet `mockito-practical-work` comme un projet Maven (menu contextuel _Imports... -> Existing Maven projects_ dans la vue _Package Explorer_)
+
+=== Le composant à tester
+
+* La classe `Order` représente une commande comportant une liste de produits (voir classe `Product`).
+
+=== Mes premiers Mocks
+
+. Dans l’explorateur, faites un clic droit sur la classe `Order` (sous le package `com.sqli.isc.iut.courses.mockito.domain`).
+. Dans le menu contextuel, cliquez sur _New –> JUnit Test Case_.
+. Sélectionnez le bouton radio _New JUnit 4 test_ (sélectionné par défaut).
+. Remarquez que le dossier _Source folder_ pointe sur le répertoire `mockito-practical-work/src/test/java`, répertoire standard en Java où sont placés les tests unitaires.
+. Cliquez sur le bouton _Finish_.
+. Nous allons donc écrire un test simple qui permet de vérifier la création d’une nouvelle commande avec deux nouveaux produits.
+
+La règle est la suivante : si j'ai deux produits dont les prix sont 3.99 et 5.00, ma commande me revient à 8.99
+
+La librairie https://github.com/mockito/mockito[Mockito] propose plusieurs méthodes pour instancier des Mocks. La façon la plus simple est d’utiliser la méthode static mock() :
+....
+Mockito.mock(Product.class);
+....
+Pour simuler le comportement d’un produit pour qu’il retourne un prix concret et donc tester notre méthode `getTotalPrice()` :
+....
+Mockito.when(product1.getPrice()).thenReturn(new BigDecimal("3.99"));
+....

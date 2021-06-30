@@ -12,7 +12,7 @@
 
 === Le composant à tester
 
-* Le composant `CalculatorImpl` est une implémentation de l'interface `ICalculator` et comporte quatre opérations simples simulant une calculatrice :
+* Le composant représentée par la classe `CalculatorImpl` est une implémentation de l'interface `ICalculator` et comporte quatre opérations simples simulant une calculatrice :
 ** sum
 ** minus
 ** divide
@@ -25,8 +25,8 @@
 . Sélectionnez le bouton radio _New JUnit 4 test_ (sélectionné par défaut).
 . Remarquez que le dossier _Source folder_ pointe sur le répertoire `junit-practical-work/src/test/java`, répertoire standard en Java où sont placés les tests unitaires.
 . Renommer le nom de la classe de test en `CalculatorTest`.
-. Cliquez sur le bouton _Next >_ et sélectionnez les quatres méthodes de `CalculatorImpl`
-. Lancer les tests : faites un clic droit sur la classe `CalculatorTest` créée à l'étape précédente puis dans le menu contextuel, cliquez sur _Run as Junit Test_
+. Cliquez sur le bouton _Next >_ et sélectionnez les quatres méthodes de `CalculatorImpl`.
+. Lancer les tests : faites un clic droit sur la classe `CalculatorTest` créée à l'étape précédente puis dans le menu contextuel, cliquez sur _Run as Junit Test_.
 
 === Première approche BDD
 
