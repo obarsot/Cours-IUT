@@ -94,7 +94,7 @@ assertThat("Hello world", containsString("world"));
 
 === TP
 
-ouvrir le PDF unit-tests/exercices/practical-work-junit.pdf
+ouvrir le PDF https://github.com/obarsot/Cours-IUT/blob/main/unit-tests/exercices/practical-work-junit.pdf[unit-tests/exercices/practical-work-junit.pdf]
 
 image::images/fast-typing-computer.gif[]
 
