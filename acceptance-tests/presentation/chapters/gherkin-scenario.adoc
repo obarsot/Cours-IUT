@@ -1,0 +1,97 @@
+== Rédiger des scénarios avec Gherkin
+
+image::images/gherkin.png[align=center]
+
+=== La syntaxe Gherkin
+
+Le Gherkin est une syntaxe utilisée pour faire du BDD (“Behaviour-Driven Development”) en écrivant des scénarios de test compréhensibles par des individus non techniques.
+
+=== Un langage commun
+
+* C'est un langage naturel, ce qui simplifie sa compréhension et son utilisation
+* On explique le déroulement d'une fonctionnalité (`Feature`)
+
+=== Le scénario au coeur du langage Gherkin
+
+* Un scénario est ensuite décrit par un ensemble d'étapes (`Scenario`).
+* Chaque étape est introduite par un mot-clé suivi d'un texte libre qui correspond à sa description.
+
+image::images/gherkin-example-1.png[align=left]
+
+On retrouve ici le paradigme *Given-When-Then* du BDD
+
+=== !
+
+Pour alléger la lecture d'un scénario, Gherkin propose deux autres mots clés `And` et `But`.
+
+image::images/gherkin-example-2.png[align=left]
+
+=== Un exemple en français
+
+* Plus de 60 langues sont supportées (voir https://cucumber.io/docs/gherkin/languages/[Langages supportés])
+
+....
+Scenario:
+  Etant donné que offrir un gâteau rend heureux
+  Lorsqu' on m'offre 1 gâteau
+  Alors je suis heureux
+....
+
+=== Ecrire un scénario paramétré
+
+* à l'aide du mot clé `Scenario Outline`, on va pouvoir paramétrer de tels scénarios.
+* des tableaux d'exemples sont là pour faciliter l'écriture/lecture de ce scénario.
+
+* Remarques :
+** Un même scénario paramétré peut être composé de plusieurs tableaux d'exemples
+
+=== Un exemple de `Scenario Outline`
+
+image::images/gherkin-example-4bis.png[align=center]
+
+image::images/gherkin-example-4.png[align=center] 
+
+=== Factoriser des étapes communes à différents scénarios
+
+* Comme le scénario et le scénario paramétré, le background n'est ni plus ni moins qu'une nouvelle description de scénario composée.
+* Le bloc Contexte sera joué systématiquement avant chaque scénario.
+
+=== Des scénarios, pour décrire une fonctionnalité !
+
+* Une fonctionnalité identifiée par le mot clé `Feature` est un groupement de plusieurs scénarios et/ou plans de scénario.
+
+=== Conventions
+
+* Un document rédigé en Gherkin doit respecter certaines conventions :
+** il doit être enregistré dans un fichier portant l'extension `.feature`
+** il ne peut contenir la description que d'une seule fonctionnalité (Feature)
+
+=== !
+
+....
+Fonctionnalité: Servir un café
+   En tant qu'utilisateur
+   Je veux consommer un café
+   dont le prix fixe est de 40 centimes
+
+   Contexte:
+      Etant donné que j'ai inséré 40 centimes d'euros
+
+   Scénario: Servir un café court sans sucre
+      Quand je demande un "café court sans sucre"
+      Alors la machine me remplit un gobelet de "café court sans sucre"
+
+   Scénario: Servir un café court avec sucre quand je donne trop de monnaie
+      Etant donné que j'ai inséré 10 centimes d'euros
+      Quand je demande un "café court avec sucre"
+      Alors la machine me remplit un gobelet de "café court sans sucre"
+      Et la machine me rend 10 centimes d'euros
+....
+
+=== Des tags pour finir..
+
+* Les tags permettront par exemple de :
+** marquer le domaine fonctionnel que le scénario couvert
+** filtrer l'exécution de certains scénarios.
+
+image::images/gherkin-example-5.png[align=left]

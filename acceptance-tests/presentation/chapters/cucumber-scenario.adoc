@@ -1,0 +1,82 @@
+== Cucumber
+
+image::images/cucumber.jpg[align=center]
+
+=== Une seule source de vérité
+
+* Cucumber fusionne la spécification et la documentation de test en un seul ensemble cohérent.
+
+=== Documentation vivante
+
+* Parce qu'ils sont automatiquement testés par Cucumber, vos spécifications sont toujours à jour.
+
+=== Mise en oeuvre
+
+* Indiquer à JUnit que vous voulez que votre classe de test soit lancé avec Cucumber :
+
+....
+@RunWith(Cucumber.class)
+public class MyServiceTest {
+
+}
+....
+
+=== !
+
+* Créer le fichier feature qui contiendra les scenarios de test.
+* Cucumber vous demande alors d’implémenter les phrases présentes dans le scenario.
+* Il faut les mettre dans une nouvelle classe :
+
+....
+public class MyServiceSteps {
+
+....
+
+=== TP noté à rendre
+
+* Mr Pignon et Mr Leblanc vont au bar le Juste qui est un bar à cocktail.
+* Il y a dans le bar seulement 10 places assises.
+
+.*Première histoire :*
+* _Ils arrivent mais il y a déjà 9 personnes dans le bar donc ils se font refuser le droit d'entrée, le bar affiche complet._
+
+.*Deuxième histoire :*
+* _Il arrivent, il y a déjà 8 personnes dans le bar._
+* _La personne derrière eux ne peut pas rentrer, le bar affiche complet._
+* _Ils commandent chacun un cocktail du mois à 10€._
+* _C'est Mr Leblanc qui paie l'ensemble._
+* _A la fin de leur verre, on vérifie la note, et Mr Leblanc paie._
+* _Mr Pignon est heureux car ils n'ont consommé qu'un verre (problème de foie de Mr Pignon)._
+
+=== TP noté à rendre (suite)
+
+.*Troisième histoire :*
+* _Ils arrivent, il y a 3 personnes dans le bar._
+* _Ils commandent chacun un cocktail du mois à 10€._
+* _Personne ne paie le verre de l'autre._
+* _A la fin de leur verre, ils vérifient chacun leur note, Mr Pignon paie mais Mr Leblanc insiste pour payer un autre cocktail du mois._
+* _Il commande donc 2 autres cocktails du mois pour sa note._
+* _A la fin de leur verre, Mr Leblanc vérifie la note et paie._
+* _Mr Pignon est triste car il sait qu'au dessus d'un cocktail ce dernier va passer une très mauvaise nuit (problème de foie de Mr Pignon)._
+
+=== TP - Travail Demandé
+
+* Ecrire en langage Gherkin l'ensemble de l'énoncé ainsi que les trois histoires.
+* Générer dans un projet Java les tests d'acceptance avec Cucumber.
+* Concevoir et développer la solution pour que tous les scénarios Cucumber passent « en vert ».
+
+image::images/fast-typing-computer.gif[]
+
+C'est à vous ;)
+
+=== Quelques conseils
+
+* Privilégiez l'Anglais pour écrire les scénarios Gherkin.
+* Adoptez les principes du BDD (le test d'abord !).
+* Appuyez-vous sur le Tutoriel de prise en main de Cucumber (voir le PDF https://github.com/obarsot/Cours-IUT/tree/main/acceptance-tests/exercices/cucumber-tutorial.pdf[acceptance-tests/exercices/cucumber-tutorial.pdf]).
+* Pour commencer, vous pouvez vous baser sur le projet https://github.com/obarsot/Cours-IUT/tree/main/acceptance-tests/quick-starters/junit4-cucumber-maven-starter[junit4-cucumber-maven-starter] (ou https://github.com/obarsot/Cours-IUT/tree/main/acceptance-tests/quick-starters/junit5-cucumber-maven-starter[junit5-cucumber-maven-starter] pour ceux/celles qui veulent s'aventurer avec JUnit 5).
+** Lancer les tests avec votre IDE,
+** ou bien en ligne de commandes `mvn test` ou `./mvnw test` (si Maven non installé).
+
+image::images/warning.png[]
+*Vérifier que votre projet compile !!!*
