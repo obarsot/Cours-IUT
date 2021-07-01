@@ -1,0 +1,55 @@
+
+== Rappels
+
+=== Les tests unitaires
+
+* Les tests unitaires consistent à tester *individuellement* les composants d'une application.
+* On pourra ainsi valider la qualité du code et les performances d'un module.
+
+=== Les tests d'intégration
+
+* Ces tests sont exécutés pour valider l'intégration *des différents modules entre eux* et *dans leur environnement* d'exploitation définitif.
+* Ils permettront de mettre en évidence des problèmes d'interfaces entre différents programmes.
+
+=== Les tests fonctionnels
+
+* Ces tests ont pour but de vérifier la conformité de l'application développée avec le cahier des charges initial.
+* Ils sont donc basés sur les spécifications fonctionnelles et techniques.
+
+* L'écriture de tests fonctionnels automatisés représente un effort important.
+
+=== Les tests d'acceptation
+
+* Que pouvez-vous accepter pour valider une fonctionnalité ?
+** Conformité des fonctionnalités demandées.
+** Les temps de réponses sont-ils corrects (chargement d'une page HTML, réponse d'une API, ...) ?
+
+=== Les tests de charge et de performance
+
+* Ce sont des tests permettant de mesurer les temps de réponses du système en fonction des sollicitations.
+* Les tests de charge simulent un nombre prédéfini d'utilisateurs en simultané pour mesurer le dimensionnement de l'infrastructure nécessaire (serveurs, bande passante sur le réseau, ...)
+* Les tests de performance permettent de récupérer des métriques (temps de réponses, percentile)
+
+image::images/90-percentile-response-time.png[]
+
+=== Les tests en boîte noire, grise ou blanche
+
+* Les tests en « boite noire » consistent à examiner uniquement les fonctionnalités d’une application.
+* Les tests en « boîte blanche » consistent à examiner le fonctionnement d’une application et sa structure interne, ses processus, plutôt que ses fonctionnalités.
+* Les tests en « boîte grise » compilent ces deux précédentes approches : ils éprouvent à la fois les fonctionnalités et le fonctionnement d’un système.
+
+image::images/black-grey-white-testing.jpg[]
+
+=== Analogie des « boîtes » en comparant le système testé à une voiture.
+
+* En méthode « boîte noire », on vérifie que la voiture fonctionne en allumant les lumières, en klaxonnant et en tournant la clé pour que le moteur s’allume. Si tout se passe comme prévu, la voiture fonctionne.
+ * En méthode « boîte blanche », on emmène la voiture chez le garagiste, qui regarde le moteur ainsi que toutes les autres parties (mécaniques comme électriques) de la voiture. Si elle est en bon état, elle fonctionne.
+ * En méthode « boîte grise », on emmène la voiture chez le garagiste, et en tournant la clé dans la serrure, on vérifie que le moteur s’allume, et le garagiste observe en même temps le moteur pour s’assurer qu’il démarre bien selon le bon processus.
+
+=== Pyramide des tests
+
+image::images/pyramide-testing.png[]
+
+=== Proportions des tests
+
+image::images/reversed-pyramid-testing.png[]

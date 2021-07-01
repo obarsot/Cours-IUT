@@ -1,0 +1,17 @@
+= Automatisation des tests
+
+include::chapters/introduction.adoc[]
+
+include::chapters/why.adoc[]
+
+include::chapters/reminders.adoc[]
+
+include::chapters/frameworks.adoc[]
+
+include::chapters/industrialization.adoc[]
+
+include::chapters/automated-tests.adoc[]
+
+include::chapters/mocks.adoc[]
+
+include::chapters/conclusion.adoc[]

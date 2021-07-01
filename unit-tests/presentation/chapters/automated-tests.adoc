@@ -1,0 +1,101 @@
+== Les difficultés lors de la mise en oeuvre de tests unitaires
+
+* réticences à la mise en oeuvre
+* difficultés de rédaction et de codage
+* couverture du code testé
+* temps nécessaire à la rédaction des cas de tests
+* véracité des cas de tests
+* temps nécessaire à la maintenance des cas de tests
+* les cas de tests doivent être répétables
+* complexité => base de données, fichiers
+* ...
+
+=== JUnit 4 les annotations
+
+[width="90%",frame="topbot",cols="60,160",options="header"]
+|======================
+|JUnit 4	| La description
+|@BeforeClass | La méthode est exécutée une fois avant le début de tous les tests.
+|@AfterClass | La méthode est exécutée une fois tous les tests joués.
+|@Ignore or @Ignore("Why disabled") |Marque que le test doit être désactivé.
+|@Test (expected = Exception.class) |Échec si la méthode ne lance pas l'exception nommée.
+|@Test(timeout=100) |Échoue si la méthode prend plus de 100 millisecondes.
+|======================
+
+=== !
+
+[width="90%",frame="topbot",cols="40,180",options="header"]
+|======================
+|JUnit 4	| La description
+|import org.junit.* | Package pour l'utilisation des annotations.
+|@Test | Identifie une méthode en tant que méthode de test.
+|@Before |Exécuté avant chaque test (identifié par une méthode).
+|@After |Exécuté après chaque test (chaque méthode).
+|======================
+
+=== JUnit 4 les assertions
+
+[width="90%",frame="topbot",cols="60,160",options="header"]
+|======================
+|Déclaration | La description
+|fail([message]) | Laissez la méthode échouer.
+|assertTrue([message,] boolean condition) | Vérifie que la condition booléenne est vraie.
+|assertFalse([message,] boolean condition) | Vérifie que la condition booléenne est fausse.
+|assertEquals([message,] expected, actual) |Teste que deux valeurs sont identiques.
+|assertEquals([message,] expected, actual, tolerance) |Vérifiez que les valeurs float ou double correspondent.
+|======================
+
+* Besoin de plus de puissance ? utiliser AssertJ ou Hamcrest.
+
+....
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.containsString;
+...
+assertThat("Hello world", containsString("world"));
+....
+
+=== !
+
+[width="90%",frame="topbot",cols="70,150",options="header"]
+|======================
+|Déclaration | La description
+|assertNull([message,] object) |Vérifie que l'objet est nul.
+|assertNotNull([message,] object) |Vérifie que l'objet n'est pas nul.
+|assertSame([message,] expected, actual) | Vérifie que les deux variables se réfèrent au même objet.
+|assertNotSame([message,] expected, actual) | Vérifie que les deux variables se réfèrent à des objets différents.
+|======================
+
+=== JUnit 5 - plus flexible
+
+* une API pour écrire des tests
+* un mécanisme pour découvrir et lancer les tests
+* une API pour lancer les tests (pour les outils comme Eclipse)
+
+[width="90%",frame="topbot",cols="50,95, 95",options="header"]
+|======================
+|Ce qui change (résumé) | JUnit 4 | JUnit 5
+|package | org.junit | org.junit.jupiter.api
+|plus de classes/méthodes publiques | public class MyTest | class MyTest
+|quelques annotations | @Ignore, @Category | @Disable, @Tag
+|les assertions | org.junit.Assert | org.junit.jupiter.api.Assertions
+|ordre des paramètres | assertEquals("Error message", expected, actual) | assertEquals(expected, actual, "Error message")
+|suppression de assertThat | org.junit.Assert.assertThat | Utiliser directement la librairie Hamcrest
+|======================
+
+=== CRAFTSMAN RECIPES : SOIGNEZ VOS TESTS UNITAIRES
+
+* Comment donner du sens à vos tests unitaires ?
+** En appliquant certains principes du Behavior Driven Development (BDD)
+* Pourquoi ?
+** Afin d’obtenir une classe de tests unitaires claire et maintenable.
+* Les tests doivent être
+** compréhensibles, lisibles et facilement modifiables
+** automatisables, répétables et exécutés rapidement
+
+=== TP
+
+ouvrir le PDF unit-tests/exercices/practical-work-junit.pdf
+
+image::images/fast-typing-computer.gif[]
+
+C'est à vous ;)

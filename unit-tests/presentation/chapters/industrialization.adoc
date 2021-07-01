@@ -1,0 +1,19 @@
+== L'automatisation
+
+image::images/automation.png[width=650]
+
+=== Plateforme Intégration Continue
+
+* PIC : Plateforme agrégeant des outils permettant l'IC
+
+image::images/cip.png[width="650"]
+
+=== Job classique
+
+image::images/commit-build.png[width=650]
+
+=== Principaux avantages
+
+* Test immédiat des modifications
+* Notification rapide en cas de problèmes
+* Les problèmes d'intégration sont détectés et réparés de façon continue

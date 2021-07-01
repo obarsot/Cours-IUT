@@ -1,0 +1,21 @@
+== Introduction
+
+Qui suis je ?
+
+image::images/whoami.png[]
+
+=== Déroulement du cours
+
+* N'hésitez pas à interrompre ou à intervenir
+* Merci de ne pas faire de bruit :)
+
+=== Le contrôle continu
+
+* Comment ? Un questionnaire à choix multiples
+* Quand ? La dernière heure avec Richard Liot
+
+=== Les sources
+
+* https://github.com/obarsot/Cours-IUT
+
+image::images/github-QR-code.png[]

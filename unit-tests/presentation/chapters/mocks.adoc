@@ -1,0 +1,150 @@
+== Comment faciliter l’écriture de tests unitaires
+
+* *Mockito* est un framework Java, permettant :
+** de mocker ou espionner des objets,
+** simuler et vérifier des comportements,
+** ou encore simplifier l’écriture de tests unitaires.
+
+=== A quoi sert un mock ?
+
+* Exemple dans une Architecture Hexagonale sur les principes du Domain Driven Development (DDD) :
+
+image::images/hexagonal-architecture-example.png[650]
+
+=== Domain Driven Development (DDD)
+
+* L’approche DDD vise, à isoler un domaine métier avec les caractéristiques suivantes:
+** Approfondissement des règles métier spécifiques en accord avec le modèle d’entreprise, la stratégie et les processus métier.
+** Isolation des autres domaines métier et des autres couches de l’architecture de l’application.
+** Modèle construit avec un couplage faible avec les autres couches de l’application.
+** Facilement maintenable, testable et versionnable.
+** Modèle conçu avec le moins de dépendances possibles avec une technologie ou un framework.
+
+=== Architecture Hexagonale
+
+« _Permettre à une application d’être pilotée aussi bien par des utilisateurs que par des programmes, des tests automatisés ou des scripts batchs, et d’être développée et testée en isolation de ses éventuels systèmes d’exécution et bases de données._ »
+
+https://en.wikipedia.org/wiki/Alistair_Cockburn[Alistair Cockburn] en 2005 (https://alistair.cockburn.us/hexagonal-architecture/[hexagonal architecture]).
+
+* L’architecture hexagonale repose sur trois principes et techniques:
+** Séparer explicitement la logique métier de la partie exposition (client-side) et persistence (server-side).
+** Les dépendances partent des couches techniques (client-side / server-side) vers la couche logique métier
+** Il faut isoler les couches en utilisant des ports et des adaptateurs
+
+=== Approche Behavior Driven Development (BDD)
+
+* En effet, il sera très intuitif d’écrire son test en suivant la notion *_//Given_* *_//When_* *_//Then_*, et nous verrons que Mockito met l’accent sur la 1ère et la 3ème notion.
+
+=== Greffer Mockito sur une classe JUnit
+
+Deux possibilités :
+
+* Ajouter l’annotation `@RunWith` comme suit :
+
+....
+@RunWith(MockitoJunitRunner.class)
+public class MyTestClass {
+
+}
+....
+
+* Ou à l’initialisation dans la méthode d'initialisation (ici `setUp()`)
+
+....
+private AutoCloseable closeable;
+...
+
+
+@Before
+public void setUp() {
+    closeable = MockitoAnnotations.openMocks(this);
+}
+
+@After
+public void tearDown() throws Exception {
+    closeable.close();
+}
+....
+
+* Il est conseillé de libérer la ressource après chaque test (voir méthode `tearDown()`).
+
+=== Le stubbing
+
+Mockito est capable de « stubber » (bouchonner) des classes concrètes mais aussi des interfaces.
+
+* On peut appeler la méthode `mock(...)` sur une classe :
+
+....
+User user = Mockito.mock(User.class);
+....
+
+* Ou placer une annotation si la variable est en instance de classe
+
+....
+@Mock
+User user;
+....
+
+=== Définition du comportement des objets mockés ou « Stubbing »
+
+Retour d’une valeur unique
+
+....
+Mockito.when(user.getLogin()).thenReturn(‘user1’);
+....
+
+Faire appel à la méthode d’origine
+
+....
+Mockito.when(user.getLogin()).thenCallRealMethod();
+....
+
+Levée d’exceptions
+
+....
+Mockito.when(user.getLogin()).thenThrow(new RuntimeException());
+....
+
+=== Espionner un objet avec `@Spy`
+
+* La différence entre `@Mock` et `@Spy` réside dans le fait que la deuxième permet d’instancier l’objet mocké; on peut ainsi effectuer un mock partiel.
+* Quand on appelle une méthode de l'objet « espionné »
+** la vraie méthode est appelée,
+** à moins qu'un comportement ai été défini.
+
+....
+@Spy
+User user = new User(‘user1’);
+
+user.getLogin() // retourne user1
+Mockito.when(user.getPassword()).thenReturn(‘top secret’);
+....
+
+=== Vérification d’interactions
+
+....
+verify(user).getLogin();
+
+// le test passe si getLogin() est appelée avant la fin du timeout (ici 100 ms)
+verify(user, timeout(100)).getLogin();
+
+// le test passe si il n'existe aucune autre interaction sur le mock (non vérifiée)
+verifyNoMoreInteractions(luser);
+....
+
+=== Injection
+
+* Mockito permet également d’injecter des ressources (classes nécessaires au fonctionnement de l’objet mocké), en utilisant l’annotation `@InjectMock`.
+
+* L'injection des mocks dans l'objet marqué par `@InjectMock` se fera (par ordre de priorité) :
+** injection par le constructeur
+** injection par la méthode de type « setter »
+** injection par l'attribut (même si celui-ci est `private`)
+
+=== TP
+
+ouvrir le pdf tp/tp-mocks/tp-mocks.pdf
+
+image::images/fast-typing-computer.gif[]
+
+C'est à vous ;)

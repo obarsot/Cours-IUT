@@ -1,0 +1,45 @@
+== Les frameworks de tests
+
+=== Les frameworks pour les tests unitaires
+
+* *JUnit*, TestNG (java)
+* Jasmine, Karma, Mocha (javascript)
+* nUnit (.Net)
+* SimpleTest (PHP)
+* dUnit (Delphi)
+* cppUnit (C++) etc..
+
+image::images/unit-tests-frameworks.png[]
+
+=== Les frameworks pour le mocking
+
+* *Mockito*, EasyMock, PowerMock (java)
+* Sinon JS, Jest, Rhino Mocks (javascript)
+* TypeMock, Moq (.Net)
+
+image::images/mock-tests-frameworks.png[]
+
+=== Les outils de tests de charge
+
+* JMeter, Gatling, Taurus, Locust
+
+image::images/performance-frameworks.png[]
+
+=== Les outils d'analyse de couverture de tests
+
+* Cobertura, JaCoCo (java)
+* Coverage.py (python)
+* Bullseye Coverage (C++, C)
+* NCover, dotCover (.Net)
+
+image::images/coverage-tests-tools.png[]
+
+=== Et bien d'autres
+
+* Tests manuels (SoapUI, Postman)
+* Tests d'API (frameworks REST Assured, Karate)
+* Outils de tests de sécurité 
+** type SAST (Source Code Analysis Tools)
+** type DAST (Dynamic Application Security Testing)
+* Tests IHM (GUI testing) comme Seleniumn, QTP ou Cucumber 
+* ...
