@@ -9,17 +9,17 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import com.sqli.isc.iut.courses.mockito.exception.LoginException;
 import com.sqli.isc.iut.courses.mockito.model.UserForm;
 import com.sqli.isc.iut.courses.mockito.repository.LoginRepository;
 
-@RunWith(MockitoJUnitRunner.class)
 public class LoginServiceTest {
 
 	@InjectMocks
@@ -28,7 +28,19 @@ public class LoginServiceTest {
 	@Mock
 	private LoginRepository loginRepository;
 
+	private AutoCloseable closeable;
+
 	private UserForm userForm = new UserForm("foo", "bar");
+
+	@Before
+	public void setUp() {
+		closeable = MockitoAnnotations.openMocks(this);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		closeable.close();
+	}
 
 	@Test
 	public void should_return_true_when_correct_login() {
