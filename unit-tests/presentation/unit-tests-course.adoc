@@ -12,6 +12,8 @@ include::chapters/industrialization.adoc[]
 
 include::chapters/automated-tests.adoc[]
 
+include::chapters/automated-tests-focus-junit5.adoc[]
+
 include::chapters/mocks.adoc[]
 
 include::chapters/conclusion.adoc[]

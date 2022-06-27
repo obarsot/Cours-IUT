@@ -12,13 +12,13 @@ image::images/whoami.png[]
 === Le TP
 
 * Le dernier TP de ce cours sera noté.
-* A rendre quand ? : *avant le vendredi 16 juillet 23h59* :)
+* A rendre quand ? : *avant le samedi 9 juillet 23h59* :)
 * Comment ?
 ** sur un Repo Git public genre GitHub (recommandé)
 ** par zip envoyé par mail à obarsot@sqli.com
 * Des questions pendant le temps imparti ?
 ** par mail à obarsot@sqli.com
-** prochaine séance de TP du vendredi 9 juillet 8h15-10h15
+** prochaine séance de TP du mardi 5 juillet 14h00-16h00
 
 image::images/warning.png[]
 *Vérifier que votre projet compile !!!*

@@ -64,38 +64,3 @@ assertThat("Hello world", containsString("world"));
 |assertSame([message,] expected, actual) | Vérifie que les deux variables se réfèrent au même objet.
 |assertNotSame([message,] expected, actual) | Vérifie que les deux variables se réfèrent à des objets différents.
 |======================
-
-=== JUnit 5 - plus flexible
-
-* une API pour écrire des tests
-* un mécanisme pour découvrir et lancer les tests
-* une API pour lancer les tests (pour les outils comme Eclipse)
-
-[width="90%",frame="topbot",cols="50,95, 95",options="header"]
-|======================
-|Ce qui change (résumé) | JUnit 4 | JUnit 5
-|package | org.junit | org.junit.jupiter.api
-|plus de classes/méthodes publiques | public class MyTest | class MyTest
-|quelques annotations | @Ignore, @Category | @Disable, @Tag
-|les assertions | org.junit.Assert | org.junit.jupiter.api.Assertions
-|ordre des paramètres | assertEquals("Error message", expected, actual) | assertEquals(expected, actual, "Error message")
-|suppression de assertThat | org.junit.Assert.assertThat | Utiliser directement la librairie Hamcrest
-|======================
-
-=== CRAFTSMAN RECIPES : SOIGNEZ VOS TESTS UNITAIRES
-
-* Comment donner du sens à vos tests unitaires ?
-** En appliquant certains principes du Behavior Driven Development (BDD)
-* Pourquoi ?
-** Afin d’obtenir une classe de tests unitaires claire et maintenable.
-* Les tests doivent être
-** compréhensibles, lisibles et facilement modifiables
-** automatisables, répétables et exécutés rapidement
-
-=== TP
-
-ouvrir le PDF https://github.com/obarsot/Cours-IUT/blob/main/unit-tests/exercices/practical-work-junit.pdf[unit-tests/exercices/practical-work-junit.pdf]
-
-image::images/fast-typing-computer.gif[]
-
-C'est à vous ;)

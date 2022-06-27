@@ -1,0 +1,577 @@
+== JUnit 5 - plus flexible
+
+* une API pour écrire des tests
+* un mécanisme pour découvrir et lancer les tests
+* une API pour lancer les tests (pour les outils comme Eclipse)
+
+[.text-left]
+Contrairement aux versions précédentes de JUnit, JUnit 5 est composé de plusieurs modules différents issus de trois sous-projets différents :
+
+
+**JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage**
+
+=== Intégration dans un projet maven :
+
+[source,java]
+----
+<!-- ... -->
+<dependencies>
+    <!-- ... -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- ... -->
+</dependencies>
+<build>
+    <plugins>
+        <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.2</version>
+        </plugin>
+        <!-- ... -->
+    </plugins>
+</build>
+<!-- ... -->
+----
+
+=== Exécution dans un projet maven :
+[.text-left]
+Le plugin _Maven Surefire_ permet d'exécuter l'ensemble des tests unitaires d'un projet (méthodes annotées `@Test`). 
+Il recherchera les classes de tests dont les noms complets correspondent aux modèles suivants :
+
+- \**/Test*.java
+
+- **/*Test.java
+
+- **/*Tests.java
+
+- **/*TestCase.java
+
+[.text-left]
+Spring Boot 2.6 embarque directement JUnit5 par l'intermédiaire de sa dépendance spring-boot-starter-test.
+
+=== 1er test exemple :
+
+Junit 4 :
+[source,java]
+----
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+public class BasicTest {
+	@Test
+	public void simpleTest1() {
+		LOGGER.info("--- Running test junit 4 -> 1 ---");
+		assertTrue(true);
+	}
+}
+----
+
+Junit 5 :
+[source,java]
+----
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+class BasicTest {
+	@Test
+	void simpleTest1() {
+		LOGGER.info("--- Running test junit 5 -> 1 ---");
+		assertTrue(true);
+	}
+}
+----
+
+NOTE: Une classe / méthode de test Junit 5 peut être avec une visibilité private, non nécessairement public.
+
+=== Compatibilité JUnit 3/4 et JUnit 5
+[.text-left]
+Il est possible dans un projet d'exécuter des tests Junit 3/4 existants et d'y ajouter des tests Junit Jupiter.
+
+[source,java]
+----
+<!-- ... -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13.2/version>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+<!-- ... -->
+----
+
+=== Annotations
+[.text-left]
+Les annotations de base se trouvent dans le package `org.junit.jupiter.api` du module junit-jupiter-api.
+
+[format="csv", separator=";" options="autowidth"]
+|===
+**Annotation**;**Description**
+@Test;Indique qu'une méthode est une méthode de test. Contrairement à l'annotation @Test de JUnit 4, cette annotation ne déclare aucun attribut.
+
+@ParameterizedTest;Indique qu'une méthode est un test paramétré.
+
+@RepeatedTest;Indique qu'une méthode est un test template pour un test répété.
+
+@TestFactory;Indique qu'une méthode est un test factory pour des tests dynamiques.
+
+@TestTemplate;Indique qu'une méthode est un template de cas de test conçu pour être invoqué plusieurs fois en fonction du nombre de contextes d'appel.
+
+@TestClassOrder;Utilisé pour configurer l'ordre d'exécution de la classe de test pour les classes de test @Nested dans la classe de test annotée.
+
+@TestMethodOrder;Utilisé pour configurer l'ordre d'exécution de la méthode de test pour la classe de test annotée. similaire à @FixMethodOrder de JUnit 4.
+
+@TestInstance;Utilisé pour configurer le cycle de vie de l'instance de test pour la classe de test annotée.
+|===
+
+=== !
+
+[format="csv", separator=";" options="autowidth"]
+|===
+**Annotation**;**Description**
+@DisplayName;Déclare un nom d'affichage personnalisé pour la classe de test ou la méthode de test.
+
+@DisplayNameGeneration;Déclare un générateur de nom d'affichage personnalisé pour la classe de test.
+
+@BeforeEach;Indique que la méthode annotée doit être exécutée avant chaque méthode @Test, @RepeatedTest, @ParameterizedTest ou @TestFactory dans la classe actuelle. Analogue à @Before de JUnit 4.
+
+@AfterEach;Indique que la méthode annotée doit être exécutée après chaque méthode @Test, @RepeatedTest, @ParameterizedTest ou @TestFactory dans la classe actuelle. Analogue à @After de JUnit 4.
+
+@BeforeAll;Indique que la méthode annotée doit être exécutée avant toutes les méthodes @Test, @RepeatedTest, @ParameterizedTest et @TestFactory dans la classe actuelle. analogue à @AfterClass de JUnit 4.
+
+@AfterAll;Indique que la méthode annotée doit être exécutée après toutes les méthodes @Test, @RepeatedTest, @ParameterizedTest et @TestFactory dans la classe actuelle. analogue à @AfterClass de JUnit 4.
+|===
+
+=== !
+
+[format="csv", separator=";" options="autowidth"]
+|===
+**Annotation**;**Description**
+@Nested;Indique que la classe annotée est une classe de test imbriquée non statique. Les méthodes @BeforeAll et @AfterAll ne peuvent pas être utilisées directement dans une classe de test @Nested à moins que le cycle de vie de l'instance de test "par classe" ne soit utilisé.
+
+@Tag;Utilisé pour déclarer des tags pour les tests de filtrage, que ce soit au niveau de la classe ou de la méthode. analogue aux groupes de test dans TestNG ou aux catégories dans JUnit 4.
+
+@Disabled;Utilisé pour désactiver une classe de test ou une méthode de test. analogue à @Ignore de JUnit 4.
+
+@Timeout;Utilisé pour faire échouer un test, une fabrique de tests, un modèle de test ou une méthode de cycle de vie si son exécution dépasse une durée donnée.
+
+@ExtendWith;Utilisé pour enregistrer les extensions de manière déclarative.
+
+@RegisterExtension;Utilisé pour enregistrer des extensions de manière programmative.
+
+@TempDir;Utilisé pour fournir un répertoire temporaire via une injection de champ ou une injection de paramètres dans une méthode de cycle de vie ou une méthode de test. Situé dans le package org.junit.jupiter.api.io.
+|===
+
+=== Exemple d'utilisation des annotations de base
+[source,java]
+----
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class BasicTest {
+
+	public static final Logger LOGGER = LoggerFactory.getLogger(BasicTest.class);
+
+	@BeforeAll
+	static void initAll() {
+		LOGGER.info("--- Running once before first class test junit 5 ---");
+	}
+
+	@BeforeEach
+	public void init() {
+		LOGGER.info("--- Running before test junit 5 ---");
+	}
+
+	@Test
+	void succeedingTest() {
+		LOGGER.info("--- Running test junit 5 -> 1 ---");
+		assertTrue(true);
+	}
+
+	@Test
+	@Disabled("Test ne marche plus mais il faut livrer")
+	void skipFailingTest() {
+		LOGGER.info("--- Running test junit 5 -> 2 ---");
+		fail("Failing test");
+	}
+
+	@AfterEach
+	void tearDown() {
+		LOGGER.info("--- Running after test junit 5 ---");
+	}
+
+	@AfterAll
+	static void tearDownAll() {
+		LOGGER.info("--- Running once after last class test junit 5 ---");
+	}
+}
+----
+
+=== Tests répétés
+[.text-left]
+L'annotation `@RepeatedTest` permet de répéter plusieurs fois un même test.
+
+Exemple :
+
+[source,java]
+----
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
+import org.junit.jupiter.api.TestInfo;
+
+class RepeatedTestsDemo {
+    
+    @BeforeEach
+    void beforeEach(TestInfo testInfo, RepetitionInfo repetitionInfo) {
+        int currentRepetition = repetitionInfo.getCurrentRepetition();
+        int totalRepetitions = repetitionInfo.getTotalRepetitions();
+        String methodName = testInfo.getTestMethod().get().getName();
+        logger.info(String.format("About to execute repetition %d of %d for %s", //
+            currentRepetition, totalRepetitions, methodName));
+    }
+
+    @RepeatedTest(10)
+    void repeatedTest() {
+        // ...
+    }
+
+    @RepeatedTest(5)
+    void repeatedTestWithRepetitionInfo(RepetitionInfo repetitionInfo) {
+        assertEquals(5, repetitionInfo.getTotalRepetitions());
+    }
+}
+/*
+├─ RepeatedTestsDemo ✔
+│  ├─ repeatedTest() ✔
+│  │  ├─ repetition 1 of 10 ✔
+│  │  ├─ repetition 2 of 10 ✔
+│  │  ├─ repetition 3 of 10 ✔
+│  │  ├─ repetition 4 of 10 ✔
+│  │  ├─ repetition 5 of 10 ✔
+│  │  ├─ repetition 6 of 10 ✔
+│  │  ├─ repetition 7 of 10 ✔
+│  │  ├─ repetition 8 of 10 ✔
+│  │  ├─ repetition 9 of 10 ✔
+│  │  └─ repetition 10 of 10 ✔
+│  ├─ repeatedTestWithRepetitionInfo(RepetitionInfo) ✔
+│  │  ├─ repetition 1 of 5 ✔
+│  │  ├─ repetition 2 of 5 ✔
+│  │  ├─ repetition 3 of 5 ✔
+│  │  ├─ repetition 4 of 5 ✔
+│  │  └─ repetition 5 of 5 ✔
+*/
+----
+[.text-left]
+Cas d'usages limités : s'assurer que le résultat d'un traitement reste identique après n exécutions, qu'un traitement doit retourner une erreur au bout de n exécutions ...
+
+=== Tests paramétrés
+[.text-left]
+L'annotation `@ParameterizedTest` permet de répéter plusieurs fois un même test mais avec des paramètres différents (nécessite dépendance junit-jupiter-params).
+Les valeurs de paramètres sont définis par l'intermédiaire d'une annotation `@*Source`, plusieurs techniques permettent de les alimenter.
+
+Exemple simple d'une liste de paramètre String :
+
+[source,java]
+----
+class ParameterizedTestDemo {
+
+    @ParameterizedTest
+    @NullSource
+    @EmptySource
+    @ValueSource(strings = {"String 1", "String 2", "\n"})
+    void shouldExecuteForStringList(String input) {
+        /* input = [ null, "", "String 1", "String 2", "\n"] */
+    }
+
+}
+----
+
+=== !
+
+==== Source paramètres @ValueSource
+[.text-left]
+L'annotation `@ValueSource` accepte les types primitifs + java.lang.String et java.lang.Class, par exemple :
+
+[source,java]
+----
+@ValueSource(ints = { 1, 2, 3 })
+----
+
+==== Source paramètres @EnumSource
+[.text-left]
+L'annotation `@EnumSource` permet d'utiliser des constantes de type Enum, par exemple :
+
+[source,java]
+----
+    @ParameterizedTest
+    @EnumSource(value = Month.class, names = {"APRIL", "JUNE", "SEPTEMBER", "NOVEMBER"})
+    void testEnumParam(Month param) {
+        LOGGER.info("Exécution test enum param, valeur : " + param);
+        assertNotNull(param);
+    }
+----
+
+=== !
+==== Source paramètres @MethodSource
+[.text-left]
+L'annotation `@MethodSource` permet d'exécuter une méthode statique pour générer une liste de paramètres, par exemple :
+
+[source,java]
+----
+    @ParameterizedTest
+    @MethodSource("stringProvider")
+    void testWithExplicitLocalMethodSource(String argument) {
+        assertNotNull(argument);
+    }
+
+    static Stream<String> stringProvider() {
+        return Stream.of("apple", "banana");
+    }
+
+    static Stream<Arguments> stringIntAndListProvider() {
+        return Stream.of(
+            arguments("apple", 1, Arrays.asList("a", "b")),
+            arguments("lemon", 2, Arrays.asList("x", "y"))
+        );
+    }
+----
+
+=== !
+==== Source paramètres @CsvSource
+[.text-left]
+L'annotation `@CsvSource` permet de charger des paramètres décrits sous forme csv, par exemple :
+
+[source,java]
+----
+    @ParameterizedTest
+    @CsvSource({
+        "apple, 1",
+        "banana, 2",
+        "lemon, 3",
+        "strawberry, 4"
+    })
+    void testWithCsvSource(String fruit, int rank) {
+        assertNotNull(fruit);
+        assertNotEquals(0, rank);
+    }
+----
+
+=== !
+==== Source paramètres @CsvFileSource
+[.text-left]
+L'annotation `@CsvFileSource` permet de charger des paramètres générés à partir d'un fichier csv, par exemple :
+
+[source,java]
+----
+@ParameterizedTest
+@CsvFileSource(resources = "/two-column.csv", numLinesToSkip = 1)
+void testWithCsvFileSourceFromClasspath(String country, int reference) {
+    assertNotNull(country);
+    assertNotEquals(0, reference);
+}
+
+@ParameterizedTest
+@CsvFileSource(files = "src/test/resources/two-column.csv", numLinesToSkip = 1)
+void testWithCsvFileSourceFromFile(String country, int reference) {
+    assertNotNull(country);
+    assertNotEquals(0, reference);
+}
+----
+
+=== Répertoire temporaire
+[.text-left]
+L'annotation `@TempDir` permet l'utilisation d'un répertoire temporaire pour l'ensemble des tests d'une classe (Répertoire créé dans /tmp puis supprimé automatiquement à chaque test).
+
+==== Avec JUnit 4 :
+
+[source,java]
+----
+@Rule
+public TemporaryFolder tmpFolder = new TemporaryFolder();
+----
+
+ou
+
+[source,java]
+----
+/* Erreur d'assertion si le temporary folder ne peut être supprimé */
+public TemporaryFolder folder = TemporaryFolder.builder().assureDeletion().build();
+----
+
+ou
+
+[source,java]
+----
+@ClassRule
+public static TemporaryFolder globalFolder = new TemporaryFolder();
+----
+
+=== !
+==== Avec JUnit 5 :
+
+[source,java]
+----
+/* Répertoire tmp de classe */
+@TempDir
+static Path sharedTempDir;
+
+/* Répertoire tmp de méthode test */
+@TempDir
+File tempDir;
+----
+
+=== Extensions
+[.text-left]
+Contrairement aux différentes annotations d'extensions dans Junit 4 (@RunWith, @Rule, @ClassRule), le modèle d'extension JUnit Jupiter se compose d'un concept unique et cohérent : l'API Extension avec l'annotation `@ExtendWith`.
+
+Exemple :
+
+[source,java]
+----
+@ExtendWith(MockitoExtension.class)
+@ExtendWith({ a.class, b.class })
+public class ExtensionTest {
+
+    @Test
+    @ExtendWith(c.class)
+    void should_use_extensions() {
+        ...
+    }
+}
+----
+
+`@RunWith(SpringJUnit4ClassRunner.class)` en JUnit 4 devient `@ExtendWith(SpringExtension.class)` en JUnit 5.
+
+=== Exécutions conditionnelles de tests
+[.text-left]
+Il est possible à l'aide d'annotations d'extension Junit5 d'activer ou de désactiver l'exécution de tests en fonction du contexte :
+
+- Selon le système d'exploitation (@EnabledOnOs({ OS.LINUX, OS.WINDOWS}), @DisabledOnOs(OS.MAC) ...)
+- Selon la version java (@EnabledOnJre(JRE.JAVA_8), @DisabledOnJre(JRE.JAVA_11) ...)
+- Selon la valeur d'une propriété système (@EnabledIfSystemProperty(named = "java.vm.vendor", matches = "Oracle.*"),@DisabledIfSystemProperty(named = "os.version", matches = ".*10.*") ...)
+- Selon la valeur d'une variable d'environnement (@EnabledIfEnvironmentVariable(named = "ORACLE_HOME", matches = "/opt/oracle/product/19c/.*") ...)
+- Selon une ou des conditions custom : créer une classe implémentant org.junit.jupiter.api.extension.ExecutionCondition
+
+=== Injection de paramètres
+[.text-left]
+L'utilisation de l'interface `ParameterResolver` permet d'injecter un paramètre dans une méthode de test.
+
+[source,java]
+----
+public class MyCustomParameterResolver implements ParameterResolver {
+
+    @Override
+    public boolean supportsParameter(ParameterContext parameterContext,
+      ExtensionContext extensionContext) throws ParameterResolutionException {
+        // Retourne true si le type de l'objet paramètre est correct
+        ...
+        return parameterContext.getParameter().getType() == MyCustomParameterType.class;
+    }
+
+    @Override
+    public Object resolveParameter(ParameterContext parameterContext,
+      ExtensionContext extensionContext) throws ParameterResolutionException {
+        //Retourne l'instance d'un objet à utiliser en paramètre
+        MyCustomParameterType customParam = new MyCustomParameterType();
+        ...
+        return customParam;
+    }
+}
+
+@ExtendWith(MyCustomParameterResolver.class)
+public class CustonParameterResolverTest {
+
+    private MyCustomParameterType customParamGlobal;
+
+    public CustonParameterResolverTest(MyCustonParameterType customParam) {
+        this.customParamGlobal = customParam;
+    }
+
+    @Test
+    void test(MyCustonParameterType customParam) {
+        ...
+    }
+----
+
+=== Assertions
+[.text-left]
+JUnit Jupiter conserve de nombreuses méthodes d'assertion de JUnit 4 et en ajoute quelques-unes qui se prêtent bien à une utilisation avec les lambdas Java 8. Toutes les assertions JUnit Jupiter sont des méthodes statiques de la classe `org.junit.jupiter.api.Assertions`.
+
+=== Assertion "groupées"
+[.text-left]
+Elles permettent d'exécuter un ensemble complet d'assertions même en cas d'erreur
+
+[source,java]
+----
+assertAll("Should check user admin identity",
+    () -> assertEquals("admin", user.getLastName()),
+    () -> assertEquals("admin", user.getFirstName()),
+    () -> assertTrue(user.isAdmin())
+);
+----
+
+=== Assertion "nested"
+
+[source,java]
+----
+assertAll("person",
+    () -> {
+        String firstName = person.getFirstName();
+        assertNotNull(firstName);
+        // Executed only if the previous assertion is valid.
+        assertAll("first name",
+            () -> assertTrue(firstName.startsWith("J")),
+            () -> assertTrue(firstName.endsWith("e"))
+        );
+    },
+    () -> {
+        // Grouped assertion, so processed independently
+        // of results of first name assertions.
+        String lastName = person.getLastName();
+        assertNotNull(lastName);
+        // Executed only if the previous assertion is valid.
+        assertAll("last name",
+            () -> assertTrue(lastName.startsWith("D")),
+            () -> assertTrue(lastName.endsWith("e"))
+        );
+    }
+);
+----
+
+=== CRAFTSMAN RECIPES : SOIGNEZ VOS TESTS UNITAIRES
+
+* Comment donner du sens à vos tests unitaires ?
+** En appliquant certains principes du Behavior Driven Development (BDD)
+* Pourquoi ?
+** Afin d’obtenir une classe de tests unitaires claire et maintenable.
+* Les tests doivent être
+** compréhensibles, lisibles et facilement modifiables
+** automatisables, répétables et exécutés rapidement
+
+=== TP
+
+ouvrir le PDF https://github.com/obarsot/Cours-IUT/blob/main/unit-tests/exercices/practical-work-junit.pdf[unit-tests/exercices/practical-work-junit.pdf]
+
+image::images/fast-typing-computer.gif[]
+
+C'est à vous ;)
