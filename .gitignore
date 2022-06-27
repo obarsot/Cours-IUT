@@ -28,6 +28,7 @@ nb-configuration.xml
 *.rej
 
 # Maven
+**/.mvn/wrapper/maven-wrapper.jar
 target/
 pom.xml.tag
 pom.xml.releaseBackup
