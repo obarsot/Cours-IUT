@@ -1,22 +1,36 @@
 
-== Rappels
+== Tour d'horizon des différents types de tests
 
 === Les tests unitaires
 
 * Les tests unitaires consistent à tester *individuellement* les composants d'une application.
 * On pourra ainsi valider la qualité du code et les performances d'un module.
 
+* Initiés par le développeur lui-même dont l’optique est de vérifier son code au niveau du composant qu’il doit réaliser.
+* *Ces tests doivent être automatisés rapidement* pour permettre de valider la non régression du fonctionnement du composant lors des multiples livraisons des différentes versions du logiciel, surtout en process Agile.
+
 === Les tests d'intégration
 
 * Ces tests sont exécutés pour valider l'intégration *des différents modules entre eux* et *dans leur environnement* d'exploitation définitif.
 * Ils permettront de mettre en évidence des problèmes d'interfaces entre différents programmes.
 
+* Exécutés par un testeur à l’interne ou externalisés auprès d’une TRA (Tierce Recette Applicative).
+* En interne ou externalisé, l’objectif à atteindre est le même : s’assurer que plusieurs composantes du logiciel interagissent conformément aux cahiers des charges et délivrent les résultats attendus.
+
 === Les tests fonctionnels
 
 * Ces tests ont pour but de vérifier la conformité de l'application développée avec le cahier des charges initial.
-* Ils sont donc basés sur les spécifications fonctionnelles et techniques.
+* Ils sont donc *basés sur les spécifications fonctionnelles et techniques.*
 
 * L'écriture de tests fonctionnels automatisés représente un effort important.
+* Ces tests peuvent être manuels en suivant un plan de validation :
+** rédigé au préalable,
+** teste la conformité du produit par rapport aux besoins client (Use Cases);
+** Le résultat de ces tests sont documentés dans un cahier de recette.
+
+* Le testeur déroule les fonctionnalités du logiciel, il veille ici à scruter les différentes actions du système.
+** Il observe le comportement du logiciel vis-à-vis des fonctionnalités souhaitées et attendues par le client.
+** Il compare chacune des fonctionnalités de la plateforme avec les spécifications indiquées dans le cahier des charges.
 
 === Les tests d'acceptation
 
@@ -24,11 +38,23 @@
 ** Conformité des fonctionnalités demandées.
 ** Les temps de réponses sont-ils corrects (chargement d'une page HTML, réponse d'une API, ...) ?
 
+* Il s’agit ici de *valider l’adéquation du logiciel aux spécifications du client.*
+* Sur la base d’un cahier des charges arrêté et établi en amont avec le client, ce test rassure sur la conformité du logiciel aux critères d’acceptation et aux besoins des cibles.
+* Ils sont donc généralement réalisé par le client final ou les utilisateurs : on appelle aussi cela la *« recette » du logiciel.*
+
 === Les tests de charge et de performance
 
 * Ce sont des tests permettant de mesurer les temps de réponses du système en fonction des sollicitations.
 * Les tests de charge simulent un nombre prédéfini d'utilisateurs en simultané pour mesurer le dimensionnement de l'infrastructure nécessaire (serveurs, bande passante sur le réseau, ...)
-* Les tests de performance permettent de récupérer des métriques (temps de réponses, percentile)
+* Les tests de performance permettent de récupérer des métriques (temps de réponses, percentile CPU, RAM, etc).
+* Le test de montée en charge permet d’évaluer sa capacité à supporter de plus en plus d’usagers tout en maintenant une expérience utilisateur optimale et un fonctionnement correspondant aux cahier des charges.
+
+=== Exemple de mesure du 90e centile
+
+* Statistiquement, pour calculer la valeur du 90e centile, il faut :
+** Trier les temps de réponse.
+** Supprimer 10% des valeurs les plus hautes.
+** La valeur la plus haute restante est le 90e centile (90th percentile).
 
 image::images/90-percentile-response-time.png[]
 
@@ -46,10 +72,63 @@ image::images/black-grey-white-testing.jpg[]
  * En méthode « boîte blanche », on emmène la voiture chez le garagiste, qui regarde le moteur ainsi que toutes les autres parties (mécaniques comme électriques) de la voiture. Si elle est en bon état, elle fonctionne.
  * En méthode « boîte grise », on emmène la voiture chez le garagiste, et en tournant la clé dans la serrure, on vérifie que le moteur s’allume, et le garagiste observe en même temps le moteur pour s’assurer qu’il démarre bien selon le bon processus.
 
+=== Les tests de mutations (mutation testing)
+
+* Il s’agit de *rendre le code “malade” à l’aide de mutations et d’observer la capacité de nos tests à diagnostiquer l’anomalie introduite*.
+* Les mutations appliquées au code peuvent être de différentes formes comme :
+** la modification de la valeur d’une constante,
+** le remplacement d’opérateurs,
+** la suppression d’instructions, etc.
+
+* Si les tests restent au vert malgré les mutations du code, alors ils ne suffisent pas à détecter la régression amenée par le mutant. On parle dans ce cas de *mutations survivantes*.
+* A l’inverse, si au moins un test passe au rouge lors de l'exécution d’un code muté, alors *la mutation est dite tuée* (sous entendu par le test).
+
+=== !
+
+* On peut ainsi être en mesure de calculer un score de mutation : *(nombre mutants tués / nombre mutants générés) * 100*.
+* Plus le score est élevé, plus nos tests sont robustes.
+
+* Un outil comme Pitest (Java) permet par exemple de générer automatiquement des mutants et de les exécuter pour vérifier le comportement des tests.
+* Les tests de mutation sont une forme de test en boîte blanche.
+
+image::images/mutation-testing.png[]
+
 === Pyramide des tests
+
+* Quatre niveaux de tests logiciels sont représentés dans *la Pyramide des tests.*
+* Pour automatiser des tests, il faut toujours commencer par le bas de la pyramide car *ces tests sont plus rapides à mettre en place et donc moins coûteux.*
 
 image::images/pyramide-testing.png[]
 
+=== !
+
+* Martin Fowler a défini le terme Pyramide des tests, expliquant que plus on monte dans la pyramide, plus on couvre d’éléments fonctionnels, mais plus ils sont lents et coûteux à exécuter.
+
+image::images/fowler-pyramid-testing.png[]
+
 === Proportions des tests
 
-image::images/reversed-pyramid-testing.png[]
+ * *Les tests unitaires* sont à la base de la Pyramide des tests.
+ ** Ils sont les plus nombreux et couvrent chaque module de manière indépendante.
+ ** Attention, le but des tests unitaires n’est pas de tester chaque fonction du code.
+ ** Ils doivent tester un comportement mais tout en restant isolés des autres modules.
+ ** Ils permettent également de tester plusieurs scénarios de fonctionnement d’une fonctionnalité suivant les paramètres qu’elle prend en entrée (cas passants et non passants).
+
+image::images/unit-testing.png[]
+
+=== !
+
+ * *Les tests fonctionnels*, appelés aussi tests d’intégration, viennent tester une fonctionnalité dans son ensemble.
+ ** Ils reproduisent un comportement et appellent tous les modules nécessaires à son bon fonctionnement.
+ ** Ils permettent de vérifier que le comportement est bien celui attendu.
+ ** Ils peuvent abstraire les briques extérieures à votre application (simulation d'un appel à une API par exemple).
+
+image::images/integration-testing.png[]
+
+=== !
+
+ * *Les tests End-to-End*, sont le plus souvent retrouvés dans les projets front-end.
+ ** Ils reproduisent un comportement utilisateur en manipulant un navigateur « Headless » (PhantomJS, HtmlUnit, etc) et en vérifiant que les actions menées fonctionnent correctement.
+ ** Dans le cas du développement d’une API Rest, ces tests peuvent être mis en place grâce à des outils tels que Postman ou Karaté (possibilité d'intégrer ces tests dans un pipeline d’Intégration Continue).
+ 
+image::images/end-to-end-testing.png[]

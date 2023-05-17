@@ -1,0 +1,84 @@
+== Comment faciliter l’écriture de tests unitaires ?
+
+=== Les difficultés lors de la mise en œuvre de tests unitaires
+
+* réticences à la mise en œuvre
+* difficultés de rédaction et de codage
+* couverture du code testé
+* temps nécessaire à la rédaction des cas de tests
+* véracité des cas de tests
+* temps nécessaire à la maintenance des cas de tests
+* les cas de tests doivent être répétables
+* complexité => base de données, fichiers
+
+=== Utiliser un mock
+
+* Les mocks (bouchons) sont des objets simulés qui reproduisent le comportement d'objets réels de manière contrôlée. Les frameworks de « mocking » permettent :
+** de bouchonner ou espionner des objets,
+** de simuler et vérifier des comportements,
+** de simplifier l’écriture de tests unitaires (isolement).
+*  Seules les dépendances de premier niveau ont besoin d'être remplacées par des objets « mock » pour tester l'objet.
+
+image::images/mocking.png[]
+
+=== Bonnes pratiques
+
+ * Si vous n’avez pas encore de tests, ou pas le temps de coder une suite de tests complète, démarrez par des tests fonctionnels.
+ * Sur les parties critiques de votre application, renforcez vos tests fonctionnels avec des tests unitaires
+ * *Ne faites surtout pas de tests unitaires pour toutes vos fonctions*, lors d’un test unitaire vous testez toujours une fonctionnalité, mais sans qu’elle ne soit impactée par les autres modules en amont ou en aval.
+ * *Ne cherchez pas à atteindre les 100% de couverture de code* sur l’intégralité de votre code.
+ * *Ne pas effectuer des tests unitaires sur du code généré automatiquement* ou sur du code identifié comme boilerplate (_getters_, _setters_)
+
+=== Bonnes pratiques
+
+* *Tester de petits morceaux de code de manière isolée*
+* *Adopter la méthodologie « AAA »* : _Arrange_, _Act_, _Assert_
+** Dans la première étape, vous organisez les choses pour les tests : _Arrange_ (contexte requis pour l'exécution du test et résultats attendus).
+** Ensuite, vous agissez : _Act_. Ici, vous appelez la fonction testée et stockez ses résultats.
+** Maintenant, vous affirmez si l'hypothèse est correcte : _Assert_. C'est l'essence d'un test unitaire, car cette partie teste enfin quelque chose. Le but est de vérifier si le résultat obtenu correspond à celui attendu.
+* *La méthode « AAA » s'apparente à la méthodologie « BDD »* (Behaviour Driven Development) avec _Given_-_When_-_Then_.
+* Bien aérer son test en ajoutant des commentaires pour distinguer les sections _Given_-_When_-_Then_.
+
+=== Bonnes pratiques
+
+* *Garder les tests courts*
+** *Les fonctions courtes sont beaucoup plus faciles à lire et à comprendre.*
+** Puisque nous testons un morceau de logique à la fois, les tests ne devraient pas dépasser quelques lignes de code de toute façon.
+* *Rendre les tests simples*
+** Évitez la logique complexe dans les tests.
+** Comme tout autre code, les tests sont également soumis à une refactorisation. Il faudra trouver un bon équilibre entre simplicité et répétitivité.
+* *Rendre les tests performants*
+** Les tests unitaires doivent pouvoir s'exécuter sur toutes les machines. Votre équipe devrait les exécuter plusieurs fois par jour.
+** Ils s'exécuteraient à la fois pendant les builds locaux et dans votre Intégration Continue.
+** *Les tests unitaires doivent être rapides.*
+** S'assurer de « mocker » toutes les dépendances externes qui pourraient le ralentir, comme les appels d'API, les bases de données ou l'accès au système de fichiers.
+
+=== Bonnes pratiques
+
+* *Couvrir d'abord les cas passants*
+** Ce sont souvent les tests les plus simples à écrire.
+* *Tester ensuite les cas plus complexes, non passants*
+** Il s'agit ici de tester des choses qui ne sont pas censées se produire trop souvent : mauvaise entrée, arguments manquants, données vides, exceptions dans les fonctions appelées, etc.
+** Les outils de couverture de code peuvent aider à trouver des branches de code qui n'ont pas encore été testées.
+* *Écrire d'abord des tests avant de corriger les bogues*
+** Écrire le test qui permet de reproduire le bogue.
+** Vous laisserez un excellent test de régression pour repérer ce bogue à l'avenir. Et vous saurez que vous l'avez correctement corrigé lorsque le test qui a précédemment échoué commencera à réussir.
+
+=== Bonnes pratiques
+
+* *Garder les tests « Stateless » (sans état)*
+** Los tests ne doivent rien changer en dehors de leur portée ou laisser des effets de bord.
+** *Les tests doivent être indépendants les uns des autres.*
+** Si vous avez besoin d'un arrangement répétitif complexe, utilisez les mécanismes de configuration (_setup_ ou _teardown_) fournis par les frameworks.
+* *Écrire des tests déterministes*
+** Si le test réussit - il devrait toujours réussir, et s'il échoue - il devrait toujours échouer.
+** L'heure de la journée, la disposition des étoiles ou le niveau de la marée ne devraient pas affecter cela.
+
+=== Bonnes pratiques
+
+* *Utiliser des noms descriptifs*
+** La première chose que vous voyez lorsque le test échoue est son nom (correspondant au nom de la méthode).
+** Ne pas avoir peur d'un nom de méthode à rallonge (par exemple _it('should return 0 for an empty cart')_ est bien meilleur que _it('works for 0')_ ou _it('empty cart')_). *Le nom de la méthode devrait fournir suffisament d'informations pour comprendre ce que fait le test.*
+** Utiliser des noms explicites normalisés comme par exemple _calculateTotalShouldReturnZeroWhenCartIsEmpty()_
+* *Tester une exigence à la fois*
+** Utiliser une assertion par test et privilégier les assertions spécifiques (_Assert.assertEquals("AA", "BB")_ est plus précis que _Assert.isTrue("AA".equals"BB")_)

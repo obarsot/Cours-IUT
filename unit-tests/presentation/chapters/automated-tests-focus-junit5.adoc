@@ -1,4 +1,4 @@
-== JUnit 5 - plus flexible
+== JUnit 5
 
 * une API pour écrire des tests
 * un mécanisme pour découvrir et lancer les tests

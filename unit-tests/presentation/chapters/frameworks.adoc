@@ -1,5 +1,8 @@
 == Les frameworks de tests
 
+* Il existe différents langages de programmation que vous pouvez envisager pour réaliser des tests automatisés, tels que Java, Python, C#, etc.
+* Un panel plus ou moins important de frameworks et d'outils est disponible pour réaliser ces tests (manuels ou automatisés).
+
 === Les frameworks pour les tests unitaires
 
 * *JUnit*, TestNG (java)

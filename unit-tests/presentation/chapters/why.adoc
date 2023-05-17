@@ -7,6 +7,7 @@ image::images/ci-fire.jpg[]
 
 === Coder c'est tester !
 
+* Tester, c'est douter => FAKE !
 * Tester ce n'est pas que vérifier que son application marche!
 ** C'est savoir *rapidement* quand l'application ne marche plus
 ** *où* dans le code
@@ -17,25 +18,27 @@ image::images/ci-fire.jpg[]
 * Impact sur la conception
 * Modularité & testabilité
 
+*Plus un code est modulaire, plus il est facile de le tester unitairement.*
+
 === XP pour eXtreme Programming
  
-* La méthodologie eXtreme Programming est une méthode de gestion de projet qui applique à l'extrême les principes de ceux des méthodes Agiles.
+* La méthodologie *eXtreme Programming* est une méthode de gestion de projet qui applique à l'extrême les principes de ceux des méthodes Agiles.
 ** on se concentre sur les besoins du client ;
-** mise en place d'un développement itératif (sprints courts de 2/3 semaines) et de l'intégration continue.
+** mise en place d'un développement itératif (sprints courts de 2-3 semaines) et de l'intégration continue.
 
 * La méthode XP s'appuie sur :
 ** une forte réactivité au changement des besoins du client ;
 ** un travail d'équipe ;
 ** la qualité du travail fourni ;
-** la qualité des tests effectués au plus tôt.
+** *la qualité des tests effectués au plus tôt.*
 
 === TDD pour Test Driven Development
 
- * Il s'agit d'une technique de conception où le programmeur *écrit d'abord le test* avant de produire le moindre code.
+ * Il s'agit d'une technique de conception où le programmeur *écrit d'abord le test avant de produire le moindre code.*
  * Le développeur écrit ensuite le code pour que le test passe.
- * Une fois son test finalisé, il pourra être libre de refactorer autant qu'il le souhaite jusqu'à obtenir un code « propre ». 
+ * Une fois son test finalisé, il pourra être libre de refactorer autant qu'il le souhaite jusqu'à obtenir un code « propre ».
 
- * C'est une *idée simple mais complexe* à mettre en oeuvre.
+ * C'est une *idée simple mais complexe* à mettre en œuvre.
  * Courbe d'apprentissage plus lente de prime abord.
 
 === Pourquoi ces pratiques ?
@@ -56,8 +59,12 @@ image::images/dilbert_tdd.png[]
 ** Vérification du cas passant
 ** Répéter l’opération en enrichissant la fonctionnalité en refactorisant
 
+*Il s'agit de la méthodologie « Red / Green / Refactor ».*
+
 === !
 
-Red / Green / Refactor
+** Le cycle _Red_, _Green_, _Refactor_ doit être le plus court possible. L'objectif est de rédiger le minimum de code possible à chaque cycle.
+** L'idée c'est d'écrire le test qui vous permet de rédiger le moins de code possible.
+** Cette méthode vous apprend à ne refactoriser que de _Green_ à _Green_.
 
 image::images/tdd.png[]

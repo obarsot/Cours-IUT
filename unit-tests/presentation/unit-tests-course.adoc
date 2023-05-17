@@ -10,7 +10,7 @@ include::chapters/frameworks.adoc[]
 
 include::chapters/industrialization.adoc[]
 
-include::chapters/automated-tests.adoc[]
+include::chapters/howto.adoc[]
 
 include::chapters/automated-tests-focus-junit5.adoc[]
 
