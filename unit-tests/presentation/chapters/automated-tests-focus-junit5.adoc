@@ -572,6 +572,6 @@ assertAll("person",
 
 ouvrir le PDF https://github.com/obarsot/Cours-IUT/blob/main/unit-tests/exercices/practical-work-junit.pdf[unit-tests/exercices/practical-work-junit.pdf]
 
-image::images/fast-typing-computer.gif[]
+image::images/fast-typing-computer.png[]
 
 C'est à vous ;)

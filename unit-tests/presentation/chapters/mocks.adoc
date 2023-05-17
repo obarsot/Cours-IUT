@@ -145,6 +145,6 @@ verifyNoMoreInteractions(luser);
 
 ouvrir le pdf tp/tp-mocks/tp-mocks.pdf
 
-image::images/fast-typing-computer.gif[]
+image::images/fast-typing-computer.png[]
 
 C'est à vous ;)

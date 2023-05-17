@@ -47,7 +47,7 @@ image::images/ci-fire.jpg[]
 
 * Enfin, jusqu'à une certaine limite !!
 
-image::images/dilbert_tdd.gif[]
+image::images/dilbert_tdd.png[]
 === Comment appliquer XP et TDD ?
 
 ** Ecriture d’un test pour une fonctionnalité
@@ -60,4 +60,4 @@ image::images/dilbert_tdd.gif[]
 
 Red / Green / Refactor
 
-image::images/tdd.gif[]
+image::images/tdd.png[]
