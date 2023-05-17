@@ -65,7 +65,7 @@ public class MyServiceSteps {
 * Générer dans un projet Java les tests d'acceptance avec Cucumber.
 * Concevoir et développer la solution pour que tous les scénarios Cucumber passent « en vert ».
 
-image::images/fast-typing-computer.gif[]
+image::images/fast-typing-computer.png[]
 
 C'est à vous ;)
 
