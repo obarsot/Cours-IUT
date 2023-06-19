@@ -18,7 +18,7 @@ image::images/whoami.png[]
 ** par zip envoyé par mail à obarsot@sqli.com
 * Des questions pendant le temps imparti ?
 ** par mail à obarsot@sqli.com
-** prochaine séance de TP du mercredi 14 juin 14h00-16h00
+** prochaine séance de TP du lundi 19 juin 14h00-16h00
 
 image::images/warning.png[]
 *Vérifier que votre projet compile !!!*
