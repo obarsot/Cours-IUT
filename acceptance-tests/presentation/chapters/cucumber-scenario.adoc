@@ -74,7 +74,7 @@ C'est à vous ;)
 * Privilégiez l'Anglais pour écrire les scénarios Gherkin.
 * Adoptez les principes du BDD (le test d'abord !).
 * Appuyez-vous sur le Tutoriel de prise en main de Cucumber (voir le PDF https://github.com/obarsot/Cours-IUT/tree/main/acceptance-tests/exercices/cucumber-tutorial.pdf[acceptance-tests/exercices/cucumber-tutorial.pdf]).
-* Pour commencer, vous pouvez vous baser sur le projet https://github.com/obarsot/Cours-IUT/tree/main/acceptance-tests/quick-starters/junit4-cucumber-maven-starter[junit4-cucumber-maven-starter] (ou https://github.com/obarsot/Cours-IUT/tree/main/acceptance-tests/quick-starters/junit5-cucumber-maven-starter[junit5-cucumber-maven-starter] pour ceux/celles qui veulent s'aventurer avec JUnit 5).
+* Pour commencer, vous pouvez vous baser sur le projet https://github.com/obarsot/Cours-IUT/tree/main/acceptance-tests/quick-starters/junit5-cucumber-maven-starter[junit5-cucumber-maven-starter].
 ** Lancer les tests avec votre IDE,
 ** ou bien en ligne de commandes `mvn test` ou `./mvnw test` (si Maven non installé).
 
