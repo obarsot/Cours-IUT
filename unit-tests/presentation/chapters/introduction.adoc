@@ -12,7 +12,7 @@ image::images/whoami.png[]
 === Le contrôle continu
 
 * Comment ? Un questionnaire à choix multiples
-* Quand ? La dernière heure avec Richard Liot
+* Quand ? La dernière heure avec Jessica Bruneau
 
 === Les sources
 

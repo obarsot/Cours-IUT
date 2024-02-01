@@ -39,7 +39,7 @@ image::images/coverage-tests-tools.png[]
 
 === Et bien d'autres
 
-* Tests manuels (SoapUI, Postman)
+* Tests manuels (SoapUI, Postman, Bruno, Insomnia REST Client, Hoppscotch)
 * Tests d'API (frameworks REST Assured, Karate)
 * Outils de tests de sécurité 
 ** type SAST (Source Code Analysis Tools)
